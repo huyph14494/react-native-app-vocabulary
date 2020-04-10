@@ -12,7 +12,9 @@
   "dependencies": {
     "expo-constants": "^9.0.0",
     "react": "16.11.0",
-    "react-native": "0.62.0"
+    "react-native": "0.62.0",
+    "react-redux": "^7.2.0",
+    "redux": "^4.0.5"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

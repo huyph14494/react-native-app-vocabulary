@@ -3,14 +3,23 @@ import {TextInput, View, TouchableOpacity, Text} from 'react-native';
 import Style from './../Style';
 
 export default class Form extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      shouldShowform: false,
+    };
+  }
+
   onChange = () => {};
   onAddWord = () => {};
-  onCancel = () => {};
-  toggleForm = () => {};
+  toggleForm = () => {
+    this.setState({
+      shouldShowform: !this.state.shouldShowform,
+    });
+  };
 
   render() {
-    let {shouldShowform} = this.props;
-    if (shouldShowform) {
+    if (this.state.shouldShowform) {
       return (
         <View style={Style.groupForm}>
           <View style={Style.groupInputText}>
@@ -35,7 +44,7 @@ export default class Form extends Component {
             </TouchableOpacity>
             <TouchableOpacity
               style={Style.buttonCustom('red')}
-              onPress={() => this.onCancel()}>
+              onPress={() => this.toggleForm()}>
               <Text style={Style.textColor('white')}>Cancel</Text>
             </TouchableOpacity>
           </View>

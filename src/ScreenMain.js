@@ -29,7 +29,7 @@ export default class ScreenMain extends Component {
   render() {
     return (
       <ScrollView style={Style.container} showsVerticalScrollIndicator={false}>
-        <Form shouldShowform={false} />
+        <Form />
         <Filter />
         <List words={this.state.words} />
         {/* <MyFlatList /> */}
