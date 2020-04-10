@@ -1,28 +1,22 @@
 import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, FlatList} from 'react-native';
 import Style from './../Style';
+import {connect} from 'react-redux';
 
-export default class List extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      words: this.props.words,
-    };
-  }
-
-  onPressMemorizedOrForgot = id => {
-    let words = this.state.words.map(word => {
+class List extends Component {
+  onPressChangeStatus = id => {
+    let words = this.props.words.map(word => {
       if (word.id === id) {
         return {...word, isMemorized: !word.isMemorized};
       }
       return word;
     });
-    this.setState({words});
+    this.props.dispatch({type: 'ON_SWITCH_STATUS', words});
   };
 
   onPressRemove = id => {
-    let words = this.state.words.filter(word => !(word.id === id));
-    this.setState({words});
+    let words = this.props.words.filter(word => !(word.id === id));
+    this.props.dispatch({type: 'ON_REMOVE_WORD', words});
   };
 
   showItems = item => {
@@ -37,7 +31,7 @@ export default class List extends Component {
         <View style={Style.groupButton}>
           <TouchableOpacity
             style={Style.buttonCustom('red')}
-            onPress={() => this.onPressMemorizedOrForgot(item.id)}>
+            onPress={() => this.onPressChangeStatus(item.id)}>
             <Text style={Style.textColor('white')}>
               {item.isMemorized ? 'Memorized' : 'Forgot'}
             </Text>
@@ -55,11 +49,20 @@ export default class List extends Component {
   render() {
     return (
       <FlatList
-        data={this.state.words}
+        scrollEnabled={false}
+        data={this.props.words}
         renderItem={({item}) => this.showItems(item)}
         keyExtractor={item => item.id}
-        extraData={this.state.words}
+        extraData={this.props.words}
       />
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  return {
+    words: state.words,
+  };
+};
+
+export default connect(mapStateToProps)(List);

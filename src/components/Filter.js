@@ -1,7 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {Component} from 'react';
-import {Picker, View} from 'react-native';
+import {View} from 'react-native';
 import Style from './../Style';
+import {Picker} from '@react-native-community/picker';
 
 export default class Filter extends Component {
   constructor(props) {

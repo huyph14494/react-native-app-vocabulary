@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 /**
  * Sample React Native App
  * https://github.com/facebook/react-native
@@ -9,11 +8,15 @@
 
 import React from 'react';
 import ScreenMain from './src/ScreenMain';
+import {Provider} from 'react-redux';
+import store from './src/redux/store';
 
 const App = () => {
-	return (
-		<ScreenMain />
-	);
+  return (
+    <Provider store={store}>
+      <ScreenMain />
+    </Provider>
+  );
 };
 
 export default App;
