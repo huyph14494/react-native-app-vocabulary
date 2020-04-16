@@ -42,7 +42,7 @@ class Form extends PureComponent {
 
             <TextInput
               style={Style.inputText}
-              onChangeText={text => (this.textVn = text)}
+              onChangeText={text => (this.textVN = text)}
               placeholder="Vietnamese"
             />
           </View>
