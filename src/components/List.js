@@ -2,26 +2,24 @@ import React, {Component} from 'react';
 import {Text, View, TouchableOpacity, FlatList} from 'react-native';
 import Style from './../Style';
 import {connect} from 'react-redux';
+import actioncreators from '../redux/action/actioncreators ';
 
 class List extends Component {
-  onPressChangeStatus = id => {
-    let words = this.props.words.map(word => {
-      if (word.id === id) {
-        return {...word, isMemorized: !word.isMemorized};
-      }
-      return word;
-    });
-    this.props.dispatch({type: 'ON_SWITCH_STATUS', words});
+  componentDidMount() {
+    this.props.fetchAllWords();
+  }
+
+  onPressChangeStatus = word => {
+    this.props.onToggleWord(word._id, !word.isMemorized);
   };
 
-  onPressRemove = id => {
-    let words = this.props.words.filter(word => !(word.id === id));
-    this.props.dispatch({type: 'ON_REMOVE_WORD', words});
+  onPressRemove = _id => {
+    this.props.onRemoveWord(_id);
   };
 
   showItems = item => {
     return (
-      <View style={Style.groupWord} key={item.id}>
+      <View style={Style.groupWord} key={item._id}>
         <View style={Style.groupText}>
           <Text style={Style.textEn}>{item.en}</Text>
           <Text style={Style.textVn}>
@@ -31,14 +29,14 @@ class List extends Component {
         <View style={Style.groupButton}>
           <TouchableOpacity
             style={Style.buttonCustom('red')}
-            onPress={() => this.onPressChangeStatus(item.id)}>
+            onPress={() => this.onPressChangeStatus(item)}>
             <Text style={Style.textColor('white')}>
               {item.isMemorized ? 'Memorized' : 'Forgot'}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={Style.buttonCustom('yellow')}
-            onPress={() => this.onPressRemove(item.id)}>
+            onPress={() => this.onPressRemove(item._id)}>
             <Text style={Style.textColor('black')}>Remove</Text>
           </TouchableOpacity>
         </View>
@@ -52,7 +50,7 @@ class List extends Component {
         scrollEnabled={false}
         data={this.props.words}
         renderItem={({item}) => this.showItems(item)}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item._id}
         extraData={this.props.words}
       />
     );
@@ -65,4 +63,7 @@ const mapStateToProps = (state, ownProps) => {
   };
 };
 
-export default connect(mapStateToProps)(List);
+export default connect(
+  mapStateToProps,
+  actioncreators,
+)(List);

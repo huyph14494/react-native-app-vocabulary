@@ -1,17 +1,28 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import {TextInput, View, TouchableOpacity, Text} from 'react-native';
 import Style from './../Style';
+import {connect} from 'react-redux';
+import actioncreators from '../redux/action/actioncreators ';
 
-export default class Form extends Component {
+class Form extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       shouldShowform: false,
     };
+    this.textEn = '';
+    this.textVN = '';
   }
 
-  onChange = () => {};
-  onAddWord = () => {};
+  onAddWord = () => {
+    this.props.onAddWord(this.textEn, this.textVN);
+    this.setState({
+      shouldShowform: !this.state.shouldShowform,
+    });
+    this.textEn = '';
+    this.textVN = '';
+  };
+
   toggleForm = () => {
     this.setState({
       shouldShowform: !this.state.shouldShowform,
@@ -25,13 +36,13 @@ export default class Form extends Component {
           <View style={Style.groupInputText}>
             <TextInput
               style={Style.inputText}
-              onChangeText={text => this.onChange(text)}
+              onChangeText={text => (this.textEn = text)}
               placeholder="English"
             />
 
             <TextInput
               style={Style.inputText}
-              onChangeText={text => this.onChange(text)}
+              onChangeText={text => (this.textVn = text)}
               placeholder="Vietnamese"
             />
           </View>
@@ -61,3 +72,8 @@ export default class Form extends Component {
     }
   }
 }
+
+export default connect(
+  null,
+  actioncreators,
+)(Form);

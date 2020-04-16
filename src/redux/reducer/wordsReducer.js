@@ -1,27 +1,27 @@
-const defaultWords = [
-  {id: '1', en: 'One', vn: 'Mot', isMemorized: true},
-  {id: '2', en: 'Two', vn: 'Hai', isMemorized: false},
-  {id: '3', en: 'Three', vn: 'Ba', isMemorized: false},
-  {id: '4', en: 'Four', vn: 'Bon', isMemorized: false},
-  {id: '5', en: 'Five', vn: 'Nam', isMemorized: false},
-  {id: '6', en: 'Six', vn: 'Sau', isMemorized: true},
-  {id: '7', en: 'Seven', vn: 'Bay', isMemorized: false},
-  {id: '8', en: 'Eight', vn: 'Tam', isMemorized: true},
-  {id: '9', en: 'Nine', vn: 'Chin', isMemorized: false},
-  {id: '10', en: 'Ten', vn: 'Muoi', isMemorized: true},
-];
+import actiontypes from '../action/actiontypes';
+
+const defaultWords = [];
 
 export default function wordsReducer(state = defaultWords, action) {
-  if (action.type === 'ON_SWITCH_STATUS') {
-    return action.words;
+  if (action.type === actiontypes.ON_SWITCH_STATUS) {
+    let wordsNew = state.map(value => {
+      if (value._id === action.word._id) {
+        return {...value, isMemorized: action.word.isMemorized};
+      }
+      return value;
+    });
+    return wordsNew;
   }
-  if (action.type === 'ON_ADD_WORD') {
-    return action.words;
+  if (action.type === actiontypes.ON_ADD_WORD) {
+    let wordsNew = [...state, action.word];
+    return wordsNew;
   }
-  if (action.type === 'ON_REMOVE_WORD') {
-    return action.words;
+  if (action.type === actiontypes.ON_REMOVE_WORD) {
+    let wordsNew = state.filter(value => value._id !== action.word._id);
+    return wordsNew;
   }
-  if (action.type === 'ON_TOGGLE_WORD') {
+
+  if (action.type === actiontypes.FETCH_DATA_WORDS) {
     return action.words;
   }
   return state;
