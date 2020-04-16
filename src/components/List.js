@@ -18,6 +18,13 @@ class List extends Component {
   };
 
   showItems = item => {
+    if (
+      (this.props.filtermode === '2' && item.isMemorized) ||
+      (this.props.filtermode === '3' && !item.isMemorized)
+    ) {
+      return null;
+    }
+
     return (
       <View style={Style.groupWord} key={item._id}>
         <View style={Style.groupText}>
@@ -60,6 +67,7 @@ class List extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     words: state.words,
+    filtermode: state.filtermode,
   };
 };
 

@@ -46,9 +46,15 @@ function fetchAllWords() {
     });
   };
 }
+
+function onSetFilterMode(filtermode) {
+  return {type: actiontypes.ON_SET_FILTER_MODE, filtermode};
+}
+
 export default {
   onRemoveWord,
   onToggleWord,
   onAddWord,
   fetchAllWords,
+  onSetFilterMode,
 };

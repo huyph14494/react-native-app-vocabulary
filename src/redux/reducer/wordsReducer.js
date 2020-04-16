@@ -24,5 +24,6 @@ export default function wordsReducer(state = defaultWords, action) {
   if (action.type === actiontypes.FETCH_DATA_WORDS) {
     return action.words;
   }
+
   return state;
 }
